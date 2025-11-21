@@ -3,6 +3,7 @@ package com.astrapay.controller;
 import com.astrapay.dto.request.NoteRequest;
 import com.astrapay.dto.response.BaseResponse;
 import com.astrapay.dto.response.NoteResponse;
+import com.astrapay.entity.Note;
 import com.astrapay.service.NoteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,11 @@ public class NoteController {
 
     @GetMapping
     public ResponseEntity<BaseResponse<List<NoteResponse>>> getAllNotes() {
+        List<NoteResponse> notes = noteService.getAllNotes();
         return ResponseEntity.ok(new BaseResponse<>(
                 200,
-                "Notes retrieved successfully",
-                noteService.getAllNotes()
+                notes.isEmpty() ? "No notes found" : "Notes retrieved successfully",
+                notes
         ));
     }
 
